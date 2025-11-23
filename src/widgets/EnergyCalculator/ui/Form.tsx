@@ -31,7 +31,6 @@ export const CalculatorForm: FC = () => {
   });
 
   const onSubmit = (data: CalculatorState) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
     setCalculatorState(data);
   };
 
@@ -44,6 +43,7 @@ export const CalculatorForm: FC = () => {
           placeholder="For example, 75"
           label="Battery Capacity (kWh)"
           error={errors.capacity?.message}
+          inputMode="numeric"
         />
       </Field>
       <Field>
@@ -51,6 +51,7 @@ export const CalculatorForm: FC = () => {
           {...register("price")}
           type="number"
           label="Price"
+          inputMode="numeric"
           error={errors.price?.message}
         />
       </Field>
