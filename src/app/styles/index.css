@@ -1,0 +1,42 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+@theme {
+  --font-roboto: "Roboto", sans-serif;
+
+  --color-primary: #4278d7;
+  --color-secondary: #1f1f1f;
+  --color-bg-main: #111111;
+  --color-text-primary: #f3f3f3;
+  --color-text-secondary: #d0d0d0;
+  --color-progress-bar: #262626;
+}
+
+@utility container {
+  margin-inline: auto;
+  max-width: 1200px;
+  width: 100%;
+  padding-inline: 1rem;
+  padding-top: 1.5rem;
+}
+
+@layer components {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .CircularProgressbar-trail {
+    stroke: var(--color-progress-bar) !important;
+  }
+  .CircularProgressbar-path {
+    stroke: var(--color-primary) !important;
+  }
+  .CircularProgressbar-text {
+    fill: var(--color-text-primary) !important;
+    font-size: 1.3rem !important;
+  }
+  input[type="range"] {
+    accent-color: var(--color-primary);
+  }
+}
