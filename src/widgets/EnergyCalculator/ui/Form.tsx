@@ -42,8 +42,9 @@ export const CalculatorForm: FC = () => {
           type="number"
           placeholder="For example, 75"
           label="Battery Capacity (kWh)"
-          error={errors.capacity?.message}
           inputMode="numeric"
+          pattern="[0-9]*"
+          error={errors.capacity?.message}
         />
       </Field>
       <Field>
@@ -52,6 +53,7 @@ export const CalculatorForm: FC = () => {
           type="number"
           label="Price"
           inputMode="numeric"
+          pattern="[0-9]*"
           error={errors.price?.message}
         />
       </Field>
