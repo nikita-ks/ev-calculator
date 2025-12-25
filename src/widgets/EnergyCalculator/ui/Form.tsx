@@ -1,44 +1,43 @@
 import { Input, InputRange } from "@/shared/ui/Input";
-import { Button } from "@/shared/ui/Buton";
 import { calculatorAtom } from "@/widgets/model/calculator/calculator";
 import type { CalculatorState } from "@/widgets/model/calculator/calculator.types";
-import { useSetAtom } from "jotai";
-import type { FC } from "react";
-import { useForm, useWatch } from "react-hook-form";
-import { Field } from "./Field";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAtom } from "jotai";
+import { useCallback, type FC } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { calculatorSchema } from "../model/form.contracts";
-
-const defaultValues = {
-  price: 17,
-};
+import { Field } from "./Field";
 
 export const CalculatorForm: FC = () => {
-  const setCalculatorState = useSetAtom(calculatorAtom);
+  const [state, setState] = useAtom(calculatorAtom);
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<CalculatorState>({
-    defaultValues,
+    mode: "onChange",
+    defaultValues: state,
     resolver: zodResolver(calculatorSchema),
   });
+
   const [currentCharge, desiredCharge] = useWatch({
     control,
     name: ["currentCharge", "desiredCharge"],
-    defaultValue: { currentCharge: 50, desiredCharge: 50 },
   });
 
-  const onSubmit = (data: CalculatorState) => {
-    setCalculatorState(data);
-  };
+  const onSubmit = useCallback(
+    (data: CalculatorState) => {
+      setState(data);
+    },
+    [setState]
+  );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onChange={handleSubmit(onSubmit)}>
       <Field>
         <Input
-          {...register("capacity")}
+          {...register("capacity", { valueAsNumber: true })}
           type="number"
           placeholder="For example, 75"
           label="Battery Capacity (kWh)"
@@ -75,9 +74,6 @@ export const CalculatorForm: FC = () => {
           error={errors.desiredCharge?.message}
         />
       </Field>
-      <div className="mt-6 max-w-[min(578px,100%)] mx-auto">
-        <Button type="submit">Calculate</Button>
-      </div>
     </form>
   );
 };

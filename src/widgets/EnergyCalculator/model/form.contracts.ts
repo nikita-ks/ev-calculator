@@ -15,7 +15,7 @@ export const calculatorSchema = z
       return data.currentCharge <= data.desiredCharge;
     },
     {
-      error: "Should be more than current %",
+      error: "Desired % should be more than current %",
       path: ["desiredCharge"],
     }
   );

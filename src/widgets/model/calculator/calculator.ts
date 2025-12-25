@@ -1,12 +1,19 @@
 import { atom } from "jotai";
 import type { CalculatorState } from "./calculator.types";
+import { atomWithStorage } from "jotai/utils";
 
-export const calculatorAtom = atom<CalculatorState>({
-  price: 17,
-  capacity: 0,
-  currentCharge: 0,
-  desiredCharge: 0,
-});
+const initialValue: CalculatorState = {
+  price: 19,
+  capacity: 75,
+  currentCharge: 50,
+  desiredCharge: 85,
+};
+export const calculatorAtom = atomWithStorage<CalculatorState>(
+  "ev-calc-state",
+  initialValue,
+  undefined,
+  { getOnInit: true }
+);
 
 export const percentageDiffAtom = atom((get) => {
   const { currentCharge, desiredCharge } = get(calculatorAtom);
